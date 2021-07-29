@@ -5,6 +5,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using RelevantCodes.ExtentReports;
 using System;
+using System.Threading;
 using static MarsFramework.Global.GlobalDefinitions;
 
 namespace MarsFramework.Global
@@ -28,9 +29,10 @@ namespace MarsFramework.Global
         [SetUp]
         public void Inititalize()
         {
-
+          
             switch (Browser)
             {
+                
 
                 case 1:
                     GlobalDefinitions.driver = new FirefoxDriver();
@@ -48,9 +50,16 @@ namespace MarsFramework.Global
             extent.LoadConfig(MarsResource.ReportXMLPath);
 
             #endregion
+            String imgstart = SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "Report");
+            test = extent.StartTest("Inititalize");           //”SampleReporting” TestMethod name
+            test.Log(LogStatus.Info, "Image example:"+ imgstart);
+           
+
 
             if (MarsResource.IsLogin == "true")
             {
+               
+
                 SignIn loginobj = new SignIn();
                 loginobj.LoginSteps();
             }
@@ -64,10 +73,13 @@ namespace MarsFramework.Global
 
 
         [TearDown]
+
         public void TearDown()
         {
-            // Screenshot
-            String img = SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "Report");//AddScreenCapture(@"E:\Dropbox\VisualStudio\Projects\Beehive\TestReports\ScreenShots\");
+
+
+            //Screenshot
+           String img = SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "Report"); //AddScreenCapture(@"E:\Dropbox\VisualStudio\Projects\Beehive\TestReports\ScreenShots\");
             test.Log(LogStatus.Info, "Image example: " + img);
             // end test. (Reports)
             extent.EndTest(test);
@@ -78,6 +90,7 @@ namespace MarsFramework.Global
             GlobalDefinitions.driver.Quit();
         }
         #endregion
-
+    
+        
     }
 }
