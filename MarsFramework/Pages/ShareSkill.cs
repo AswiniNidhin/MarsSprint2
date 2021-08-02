@@ -170,6 +170,9 @@ namespace MarsFramework.Pages
         //Click on Active/Hidden option
         [FindsBy(How = How.XPath, Using = "//form/div[10]/div[@class='twelve wide column']/div/div[@class = 'field']")]
         private IWebElement ActiveOption { get; set; }
+          //Upload file
+        [FindsBy(How = How.CssSelector, Using = "div.ui.container:nth-child(3) div.listing form.ui.form div.tooltip-target.ui.grid:nth-child(9) div.row div.twelve.wide.column div:nth-child(1) label.worksamples-file:nth-child(1) div.ui.grid span:nth-child(1) > i.huge.plus.circle.icon.padding-25")]
+        private IWebElement workSampleupload { get; set; }
 
         //Click on Save button
         [FindsBy(How = How.XPath, Using = "//input[@value='Save']")]
@@ -328,6 +331,15 @@ namespace MarsFramework.Pages
             Boolean SkillEX = SkillExchange.Displayed;
             Console.WriteLine("SKillExchange sucessfully displayed" + SkillEX);
             Console.WriteLine("**********************************");
+            
+              //upload file
+
+            workSampleupload.Click();
+            AutoItX3 autoit = new AutoItX3();
+            autoit.WinActivate("Open");
+            autoit.Send(@"C:\Users\aswin\Desktop\interview preparation\tips.docx");
+            Thread.Sleep(2000);
+            autoit.Send("{ENTER }");
            
             //Click on Active/Hidden option
             GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, By.XPath("//form/div[10]/div[@class='twelve wide column']/div/div[@class = 'field']"), 2);
